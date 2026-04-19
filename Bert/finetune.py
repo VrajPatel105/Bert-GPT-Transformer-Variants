@@ -85,3 +85,25 @@ learning_rate = 2e-5 # 2 x 10^(-5)
 optimizer = AdamW(model.parameters(), lr = learning_rate)
 
 epochs = 3
+
+# training
+
+for epoch in range(epochs):
+
+    model.train()
+
+    for batch in train_data:
+        
+        input_ids = batch['input_ids'].to(device)
+        attention_mask = batch['attention_mask'].to(device)
+        labels = batch['label'].to(device)
+
+        output = model(input_ids, attention_mask = attention_mask, labels=labels)
+
+        loss = output.loss
+
+        loss.backward()
+
+        optimizer.step()
+
+        optimizer.zero_grad()
