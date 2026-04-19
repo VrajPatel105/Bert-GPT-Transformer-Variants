@@ -1,6 +1,6 @@
 from datasets import load_dataset
 from transformers import BertForSequenceClassification, BertTokenizer
-from transformers import AdamW
+from torch.optim import AdamW
 import torch
 import torch.nn as nn
 from torch.utils.data import DataLoader, Dataset
@@ -47,7 +47,7 @@ tokenize_val.set_format("torch", columns=["input_ids", "attention_mask", "label"
 train_ds = sst2data(tokenize_train)
 val_ds = sst2data(tokenize_val)
 
-print(train_ds[0])
+# print(train_ds[0])
 
 # output
 # {'label': tensor(0), 
@@ -107,3 +107,25 @@ for epoch in range(epochs):
         optimizer.step()
 
         optimizer.zero_grad()
+
+        # validation loop
+
+    model.eval()
+
+    correct = 0
+    total = 0
+
+
+    with torch.no_grad():
+        for batch in val_data:
+            input_ids = batch['input_ids'].to(device)
+            attention_mask = batch['attention_mask'].to(device)
+            labels = batch['label'].to(device)
+
+            output = model(input_ids, attention_mask = attention_mask, labels=labels)
+            preds = torch.argmax(output.logits, dim=1)
+            correct += (preds == labels).sum().item()
+            total += len(labels)
+
+
+        print(f"Epoch {epoch} Accuracy: {correct/total:.4f}")
