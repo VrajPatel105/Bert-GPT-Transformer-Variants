@@ -28,3 +28,4 @@ print(len(dataset['validation']))
 # validatino length
 # 872
 
+print(dataset["train"]['sentence'])
