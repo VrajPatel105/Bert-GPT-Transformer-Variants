@@ -26,3 +26,16 @@ For classification, the CLS token's final representation is passed through a lin
 ## Results
 
 - **Validation accuracy on SST-2 after 3 epochs**: ~92.5%
+
+
+
+
+# In my own simpler words: 
+
+BERT stands for Bidirectional Encoder Representations from Transformers, which is an NLP model that reads text in both directions at the same time unlike older models that only read left to right.
+
+BERT comes in two versions. The smaller one is BERT-base with 110M parameters and 12 encoder blocks with a hidden size of 768. The larger one is BERT-large with 340M parameters and 24 encoder blocks with a hidden size of 1024. This project uses bert-base-uncased which means it lowercases everything before processing.
+
+There are a few special tokens. The CLS token is added at the start of every input and since it has no word meaning of its own, it builds up a summary of the entire sequence through all the attention layers, which is why it's used for classification. The SEP token separates two sentences when the input has a pair, or just marks the end for single sentence tasks like SST-2.
+
+For classification, the final CLS representation gets passed through a linear layer which outputs logits over the number of classes. Validation accuracy on SST-2 after 3 epochs was around 92.5%.
