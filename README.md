@@ -12,6 +12,8 @@ This repo covers:
 4. ALBERT Explained
 5. T5 Explained
 
+Also contains Toy dataset pretrainig implenentatiosn for MLM, CLM and seq2seq
+
 
 ## Key Differences at a Glance
 
