@@ -1,0 +1,1 @@
+print(encoded_input)
